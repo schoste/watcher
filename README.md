@@ -6,5 +6,6 @@ Python script to observe a directoy and execute a command if files changing. You
 
 ## Required Packages
 `pip install watchdog`
+
 `pip install subprocess`
 
