@@ -42,7 +42,10 @@ class DirChangedHandler(FileSystemEventHandler):
     exclude = None
 
     def setExclude(self, excludePattern):
-        self.exclude = re.compile(excludePattern)
+        if (excludePattern != None):
+            self.exclude = re.compile(excludePattern)
+        else:
+            self.exclude = None
 
     def setCommand(self, command):
         self.command = command
@@ -59,7 +62,7 @@ class DirChangedHandler(FileSystemEventHandler):
         self.process = subprocess.Popen(self.command)
 
     def _skipChange(self, file):
-        return self.exclude.match(file)
+        return self.exclude != None and self.exclude.match(file)
 
     def on_any_event(self, event):
         if event.is_directory:
@@ -82,7 +85,7 @@ if __name__ == '__main__':
     directoy = '.'
     exclude = None
     offset = 1
-    while offset + 2 < len(sys.argv):
+    while offset + 2 <= len(sys.argv):
         if sys.argv[offset] in ['--directoy', '-d']:
             directoy = sys.argv[offset + 1]
             offset += 2
@@ -92,7 +95,7 @@ if __name__ == '__main__':
         else:
             break
 
-    if (offset + 1 >= len(sys.argv)):
+    if (offset >= len(sys.argv)):
         print(
             '\nUsage:\n ', sys.argv[0], '<directory> [OPTIONS] <command> [command parameter]')
         print('\nOptions:')
