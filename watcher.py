@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-import shlex
 import subprocess
 import time
 import sys
@@ -80,7 +79,6 @@ class DirChangedHandler(FileSystemEventHandler):
 
 
 if __name__ == '__main__':
-    print(sys.argv)
 
     directoy = '.'
     exclude = None
